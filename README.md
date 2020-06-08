@@ -1,6 +1,10 @@
 # Disaster Response Pipeline
+
+## by José Manuel García 
+
 ## Project of the Udacity Data Science Nanodegree
------------------------------------------------------------
+------------------------------------------
+
 ### Project Overview
 This project aims to analyze disaster data to build a model for an API that classifies disaster messages making use of pipelines for preprocessing data and creating the Machine Learning models.
 
