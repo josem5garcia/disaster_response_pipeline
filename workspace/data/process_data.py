@@ -3,6 +3,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    Read csvs and returns a dataframe with the information of both categories and messages
+    INPUTS: messages filepath & categories filepath
+    OUTPUT: DataFrame
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, left_on='id', right_on='id', how='outer')
@@ -11,6 +16,11 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+    Preprocess the DataFrame
+    INPUT: DataFrame
+    OUTPUT: Modified DataFrame
+    '''
     categories = df.categories.str.split(';', expand = True)
     row = categories.loc[0]
     
@@ -29,6 +39,11 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    '''
+    Creates a database with the provided DataFrame
+    INPUTS: DataFrame and database name
+    OUTPUT: None
+    '''
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('messages_disaster', engine, index=False)  
 
