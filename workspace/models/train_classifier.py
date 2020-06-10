@@ -14,6 +14,11 @@ from sklearn.model_selection import GridSearchCV
 from sqlalchemy import create_engine
 
 def load_data(database_filepath):
+    '''
+    Loads data from the database
+    INPUTS: database path
+    OUTPUT: messages, categories and categories names
+    '''
     table_name = 'messages_disaster'
     engine = create_engine(f"sqlite:///{database_filepath}")
     df = pd.read_sql_table(table_name, con=engine)
@@ -25,6 +30,11 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    Tokenizes text
+    INPUTS: text
+    OUTPUT: tokenized text
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
     clean_tokens = []
@@ -35,6 +45,11 @@ def tokenize(text):
     return clean_tokens
 
 def build_model():
+    '''
+    Creates the ML model with a pipeline and GridSearch
+    INPUTS: None
+    OUTPUT: model
+    '''
     pipeline = Pipeline([
                          ('vect', CountVectorizer()),
                          ('tfidf', TfidfTransformer()),
@@ -50,6 +65,11 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    Test the performance of the model
+    INPUTS: model, X & Y test data, and names of the categories
+    OUTPUT: 
+    '''
     y_pred = model.predict(X_test)
     
     print(classification_report(y_pred, Y_test.values, target_names=category_names))
@@ -58,6 +78,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    Save model into directory
+    INPUTS: model and path
+    OUTPUT: None
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
 
 
